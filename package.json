@@ -1,0 +1,21 @@
+{
+  "name": "eids-2025-backend",
+  "version": "1.0.0",
+  "description": "Backend API for EIDS 2025 Event Registration and Check-in System using PocketBase",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "pocketbase": "^0.21.3",
+    "uuid": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
