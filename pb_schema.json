@@ -50,11 +50,7 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
+        "options": { "min": null, "max": null, "pattern": "" }
       },
       {
         "id": "reg_lname_field",
@@ -63,11 +59,7 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
+        "options": { "min": null, "max": null, "pattern": "" }
       },
       {
         "id": "reg_email_field",
@@ -76,36 +68,25 @@
         "required": true,
         "presentable": true,
         "unique": true,
-        "options": {
-          "exceptDomains": null,
-          "onlyDomains": null
-        }
+        "options": { "exceptDomains": null, "onlyDomains": null }
       },
       {
         "id": "reg_phone_field",
         "name": "phone",
         "type": "text",
-        "required": true,
+        "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
+        "options": { "min": null, "max": null, "pattern": "" }
       },
       {
         "id": "reg_org_field",
         "name": "organization",
         "type": "text",
-        "required": false,
+        "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
+        "options": { "min": null, "max": null, "pattern": "" }
       },
       {
         "id": "reg_notes_field",
@@ -114,27 +95,16 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
+        "options": { "min": null, "max": null, "pattern": "" }
       },
       {
         "id": "reg_status_fld",
         "name": "status",
         "type": "select",
-        "required": true,
+        "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "pending",
-            "confirmed",
-            "rejected"
-          ]
-        }
+        "options": { "maxSelect": 1, "values": ["pending", "confirmed", "rejected"], "default": "pending" }
       },
       {
         "id": "reg_payfile_fd",
@@ -144,12 +114,7 @@
         "presentable": false,
         "unique": false,
         "options": {
-          "mimeTypes": [
-            "image/jpeg",
-            "image/png",
-            "image/webp",
-            "application/pdf"
-          ],
+          "mimeTypes": ["image/jpeg", "image/png", "application/pdf"],
           "thumbs": [],
           "maxSelect": 1,
           "maxSize": 3145728,
@@ -163,10 +128,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
+        "options": { "min": "", "max": "" }
       },
       {
         "id": "reg_sc_lunch_f",
@@ -175,10 +137,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
+        "options": { "min": "", "max": "" }
       },
       {
         "id": "reg_reg_at_fld",
@@ -187,10 +146,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
+        "options": { "min": "", "max": "", "autoNow": true }
       },
       {
         "id": "reg_qrcode_fld",
@@ -199,11 +155,7 @@
         "required": false,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
+        "options": { "min": null, "max": null, "pattern": "" }
       }
     ],
     "indexes": [],
@@ -227,13 +179,7 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "collectionId": "registrants0000",
-          "cascadeDelete": true,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": null
-        }
+        "options": { "collectionId": "registrants0000", "cascadeDelete": true, "minSelect": null, "maxSelect": 1, "displayFields": null }
       },
       {
         "id": "scan_chkpnt_fld",
@@ -242,13 +188,7 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "maxSelect": 1,
-          "values": [
-            "entry",
-            "lunch"
-          ]
-        }
+        "options": { "maxSelect": 1, "values": ["entry", "lunch"] }
       },
       {
         "id": "scan_sc_at_fld",
@@ -257,10 +197,7 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
+        "options": { "min": "", "max": "" }
       },
       {
         "id": "scan_sc_by_fld",
@@ -269,11 +206,7 @@
         "required": true,
         "presentable": false,
         "unique": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
+        "options": { "min": null, "max": null, "pattern": "" }
       }
     ],
     "indexes": [],
