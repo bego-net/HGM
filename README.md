@@ -157,6 +157,38 @@ Your 3 collections (`admins`, `registrants`, `scanLogs`) will be created instant
 
 ---
 
+## Local Start (PocketBase + Next.js)
+
+From the project root you can start PocketBase and the existing Next.js frontend:
+
+1. Download the PocketBase binary into `./pocketbase` (see `pocketbase/README.md`) or run the included helper:
+
+```bash
+cd pocketbase
+./download_pb.sh    # Linux / macOS
+# or
+./download_pb.ps1   # Windows PowerShell
+```
+
+2. From project root start PocketBase (runs on port 8090):
+
+```bash
+npm run pb
+```
+
+3. In a separate terminal start the Next.js frontend (inside `frontend`):
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Notes:
+- Ensure `frontend/.env.local` contains `NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090`.
+- Import `pb_schema.json` via the PocketBase Admin Console after creating an admin account.
+
+
 ## 4. Running the Node.js API Wrapper
 
 ### Installation
