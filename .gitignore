@@ -1,0 +1,27 @@
+node_modules/
+
+# Environment files (never commit secrets)
+.env
+.env.local
+.env.production
+.env.development
+.env.*.local
+
+# PocketBase data and storage
+pocketbase/*.db
+pocketbase/pb_data/
+pocketbase/pb_data/*.db
+pocketbase/pb_data/*.db-*
+pocketbase/storage/
+
+# Build / runtime
+dist/
+build/
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Optional lock files
+npm-debug.log
