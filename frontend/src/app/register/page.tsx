@@ -83,7 +83,6 @@ export default function Register() {
     if (!firstName.trim()) errors.firstName = 'First name is required.';
     if (!lastName.trim()) errors.lastName = 'Last name is required.';
     if (!organization.trim()) errors.organization = 'Organization name is required.';
-    if (!phone.trim()) errors.phone = 'Phone number is required.';
     
     if (!email.trim()) {
       errors.email = 'Email address is required.';
@@ -114,8 +113,8 @@ export default function Register() {
       formData.append('notes', notes.trim());
       formData.append('status', 'pending');
       
-      // Generate a client-side registration QR token hash/string
-      const clientQrToken = `EIDS25-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+      // Generate a client-side registration QR token in format EIDS-2025-XXXX
+      const clientQrToken = `EIDS-2025-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
       formData.append('qrCode', clientQrToken);
 
       // Automatically register the timestamp
@@ -175,7 +174,7 @@ export default function Register() {
 
   // SUCCESS COMPONENT
   if (status === 'success' && successData) {
-    const registrationId = `EIDS-2025-${successData.id.slice(0, 4).toUpperCase()}-${successData.id.slice(-4).toUpperCase()}`;
+    const registrationId = `EIDS-2025-${successData.id.slice(0, 4).toUpperCase()}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${successData.qrCode}`;
 
     return (
