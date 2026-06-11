@@ -1,6 +1,5 @@
-import PocketBase from 'pocketbase';
-
-const pbUrl = process.env.NEXT_PUBLIC_PB_URL || 'http://127.0.0.1:8090';
-export const pb = new PocketBase(pbUrl);
-
-export default pb;
+/**
+ * @deprecated - Use @/lib/pocketbase (src/lib/pocketbase.ts) instead.
+ * This file is kept for backwards compatibility only.
+ */
+export { pb, default, getFileUrl } from '../src/lib/pocketbase';

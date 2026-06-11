@@ -7,31 +7,34 @@ import { pb } from '@/lib/pocketbase';
  * Returns the Base64 data URL (PNG).
  */
 export async function generateQR(registrantId: number | string): Promise<string> {
-  // Format token as EIDS-2025-XXXX where XXXX is zero-padded when a number is provided
   let token: string;
   if (typeof registrantId === 'number') {
     token = `EIDS-2025-${String(registrantId).padStart(4, '0')}`;
   } else {
-    // if a string id is provided, use last 4 chars for human id fallback
-    const suffix = registrantId.slice(-4).toUpperCase();
-    token = `EIDS-2025-${suffix}`;
+    try {
+      const record = await pb.collection('registrants').getOne(registrantId);
+      if (record.qrCode && /^EIDS-2025-\d{4}$/.test(record.qrCode)) {
+        token = record.qrCode;
+      } else {
+        const all = await pb.collection('registrants').getFullList({ sort: 'created' });
+        const index = all.findIndex(r => r.id === registrantId);
+        const num = index !== -1 ? index + 1 : all.length + 1;
+        token = `EIDS-2025-${String(num).padStart(4, '0')}`;
+      }
+    } catch (err) {
+      console.warn('generateQR: failed to fetch record, using random 4-digit suffix as fallback', err);
+      const randomNum = Math.floor(Math.random() * 9000) + 1000;
+      token = `EIDS-2025-${randomNum}`;
+    }
   }
 
   const dataUrl = await QRCode.toDataURL(token, { type: 'image/png', margin: 1, width: 250 });
 
   try {
-    // Try to update a registrant record whose id matches registrantId (if string)
     if (typeof registrantId === 'string') {
       await pb.collection('registrants').update(registrantId, { qrCode: token });
-    } else {
-      // numeric id: attempt to find a registrant by their qrCode matching token (if exists), else skip update
-      const list = await pb.collection('registrants').getFullList({ filter: `qrCode = "${token}"`, perPage: 1 });
-      if (list && list.length > 0) {
-        await pb.collection('registrants').update(list[0].id, { qrCode: token });
-      }
     }
   } catch (err) {
-    // ignore update errors here; caller may have different auth context
     console.error('generateQR: failed to save qrCode to PocketBase:', err);
   }
 

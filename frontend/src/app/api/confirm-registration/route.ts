@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import PocketBase from 'pocketbase';
 import QRCode from 'qrcode';
-import Resend from 'resend';
+import { Resend } from 'resend';
 
 const PB_URL = process.env.PB_URL || process.env.NEXT_PUBLIC_PB_URL || 'http://127.0.0.1:8090';
 const ADMIN_EMAIL = process.env.PB_ADMIN_EMAIL;
@@ -17,18 +17,25 @@ export async function POST(req: Request) {
     if (!ADMIN_EMAIL || !ADMIN_PASSWORD) return NextResponse.json({ success: false, message: 'Server missing PB admin credentials' }, { status: 500 });
     if (!RESEND_API_KEY) return NextResponse.json({ success: false, message: 'Server missing RESEND_API_KEY' }, { status: 500 });
 
+    // PB v0.39: use _superusers collection for superuser auth
     const pb = new PocketBase(PB_URL);
-    await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
+    await pb.collection('_superusers').authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
 
     // fetch registrant
     const registrant = await pb.collection('registrants').getOne(registrantId);
     if (!registrant) return NextResponse.json({ success: false, message: 'Registrant not found' }, { status: 404 });
 
-    // generate token and QR
-    const token = registrant.qrCode || `EIDS-2025-${registrant.id.slice(0,4).toUpperCase()}`;
+    // generate token and QR (exactly EIDS-2025-XXXX zero-padded 4 digits)
+    let token = registrant.qrCode;
+    if (!token || !/^EIDS-2025-\d{4}$/.test(token)) {
+      const all = await pb.collection('registrants').getFullList({ sort: 'created' });
+      const index = all.findIndex(r => r.id === registrant.id);
+      const num = index !== -1 ? index + 1 : all.length + 1;
+      token = `EIDS-2025-${String(num).padStart(4, '0')}`;
+    }
     const dataUrl = await QRCode.toDataURL(token, { type: 'image/png', margin: 1, width: 400 });
 
-    // save qrCode (token) and optionally a derived qrImage field
+    // save qrCode (token)
     await pb.collection('registrants').update(registrantId, { qrCode: token });
 
     // render badge HTML with inline QR image
